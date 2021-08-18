@@ -1,9 +1,10 @@
-from setuptools import setup, Extension, find_packages
-from setuptools.command.build_ext import build_ext
-import subprocess
-import os
-import sys
 import glob
+import os
+import subprocess
+import sys
+
+from setuptools import Extension, find_packages, setup
+from setuptools.command.build_ext import build_ext
 
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 PACKAGE_ROOT = os.path.join(SCRIPT_DIR, "procgen")
@@ -85,13 +86,13 @@ setup(
     package_data={
         "procgen": [
             "version.txt",
+            "py.typed",
             *asset_relpaths,
         ]
     },
     extras_require={"test": ["pytest==5.2.1", "pytest-benchmark==3.2.2"]},
     ext_modules=[DummyExtension()],
     cmdclass={"build_ext": custom_build_ext},
-
     author="OpenAI",
     description="Procedurally Generated Game-Like RL Environments",
     long_description=README,
