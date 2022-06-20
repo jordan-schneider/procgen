@@ -9,6 +9,7 @@ std::vector<std::shared_ptr<QImage>> platform_backgrounds;
 std::vector<std::shared_ptr<QImage>> space_backgrounds;
 std::vector<std::shared_ptr<QImage>> water_backgrounds;
 std::vector<std::shared_ptr<QImage>> water_surface_backgrounds;
+std::vector<std::shared_ptr<QImage>> caves;
 
 std::map<std::string, std::shared_ptr<QImage>> sprites;
 
@@ -810,7 +811,7 @@ void images_load() {
         "platformer/playerGrey_duck.png",
     };
 
-    for (const auto& sprite_path : sprite_paths) {
+    for (const auto &sprite_path : sprite_paths) {
         sprites[sprite_path] = load_resource_ptr(sprite_path, QImage::Format_ARGB32_Premultiplied);
     }
 
@@ -951,4 +952,8 @@ void images_load() {
     for (auto bg : space_backgrounds) {
         platform_backgrounds.push_back(bg);
     }
+
+    caves.push_back(platform_backgrounds[2]);
+    caves.push_back(platform_backgrounds[3]);
+    caves.push_back(platform_backgrounds[13]);
 }

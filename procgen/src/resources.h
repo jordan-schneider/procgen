@@ -20,3 +20,4 @@ extern std::vector<std::shared_ptr<QImage>> platform_backgrounds;
 extern std::vector<std::shared_ptr<QImage>> space_backgrounds;
 extern std::vector<std::shared_ptr<QImage>> water_backgrounds;
 extern std::vector<std::shared_ptr<QImage>> water_surface_backgrounds;
+extern std::vector<std::shared_ptr<QImage>> caves;
