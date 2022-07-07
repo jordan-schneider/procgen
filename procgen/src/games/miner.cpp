@@ -266,21 +266,20 @@ class MinerGame : public BasicAbstractGame {
 
     void game_step() override {
         // Objects at or below agent's height move before the agent does (so you can't push something above an empty space), but objects above the agent fall after the agent moves (so the agent can dodge).
-        if (died) {
-            step_data.done = true;
-            return;
-        }
-        
         Grid<bool> has_moved;
         has_moved.resize(main_width, main_height);
-        
+
         for (int y = 0; y <= agent->y; y++) {
             for (int x = 0; x < main_width; x++) {
                 move_cell(x, y, has_moved);
             }
         }
-       
+
         BasicAbstractGame::game_step();
+        if (died) {
+            step_data.done = true;
+            return;
+        }
 
         if (action_vx > 0)
             agent->is_reflected = false;
@@ -306,8 +305,8 @@ class MinerGame : public BasicAbstractGame {
         }
         diamonds_remaining = count_diamonds();
     }
-    
-    void move_cell(int x, int y, Grid<bool>& has_moved) {
+
+    void move_cell(int x, int y, Grid<bool> &has_moved) {
         // TODO: Make it so we only convert between idx and (x,y) once.
         int idx = x + main_width * y;
         bool current_moved = has_moved.get_index(idx);
@@ -348,7 +347,7 @@ class MinerGame : public BasicAbstractGame {
 
     int count_diamonds() {
         int diamonds = 0;
-        for (int idx =0; idx++; idx < main_area){
+        for (int idx = 0; idx++; idx < main_area) {
             if (get_stationary_type(get_obj(idx)) == DIAMOND) {
                 diamonds++;
             }
