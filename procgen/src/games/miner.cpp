@@ -59,7 +59,7 @@ class MinerGame : public BasicAbstractGame {
         } else if (type == DIRT) {
             names.push_back("misc_assets/dirt.png");
         } else if (type == MUD) {
-            names.push_back("misc_assets/groundB.png");
+            names.push_back("misc_assets/mud.png");
         } else if (type == OOB_WALL) {
             names.push_back("misc_assets/tile_bricksGrey.png");
         }
@@ -167,21 +167,21 @@ class MinerGame : public BasicAbstractGame {
         agent->x = agent_x + .5;
         agent->y = agent_y + .5;
 
-        for (int i = 0; i < main_area; i++) {
+        for (int i = 0; i < main_area; ++i) {
             set_obj(i, DIRT);
         }
 
-        for (int i = 0; i < num_diamonds; i++) {
+        for (int i = 0; i < num_diamonds; ++i) {
             int cell = obj_idxs[i + 1];
             set_obj(cell, DIAMOND);
         }
 
-        for (int i = 0; i < num_boulders; i++) {
+        for (int i = 0; i < num_boulders; ++i) {
             int cell = obj_idxs[i + 1 + num_diamonds];
             set_obj(cell, BOULDER);
         }
 
-        for (int i = 0; i < num_mud; i++) {
+        for (int i = 0; i < num_mud; ++i) {
             int cell = obj_idxs[i + 1 + num_diamonds + num_boulders];
             set_obj(cell, MUD);
         }
@@ -190,8 +190,8 @@ class MinerGame : public BasicAbstractGame {
 
         set_obj(int(agent->x), int(agent->y), SPACE);
 
-        for (int i = -1; i <= 1; i++) {
-            for (int j = -1; j <= 1; j++) {
+        for (int i = -1; i <= 1; ++i) {
+            for (int j = -1; j <= 1; ++j) {
                 int ox = agent_x + i;
                 int oy = agent_y + j;
                 if (get_obj(ox, oy) == BOULDER) {
@@ -215,6 +215,7 @@ class MinerGame : public BasicAbstractGame {
         set_obj(exit_cell, SPACE);
         auto exit = add_entity((exit_cell % main_width) + .5, (exit_cell / main_width) + .5, 0, 0, .5, EXIT);
         exit->render_z = -1;
+        diamonds_remaining = count_diamonds();
     }
 
     int get_moving_type(int type) {
@@ -269,8 +270,8 @@ class MinerGame : public BasicAbstractGame {
         Grid<bool> has_moved;
         has_moved.resize(main_width, main_height);
 
-        for (int y = 0; y <= agent->y; y++) {
-            for (int x = 0; x < main_width; x++) {
+        for (int y = 0; y <= agent->y; ++y) {
+            for (int x = 0; x < main_width; ++x) {
                 move_cell(x, y, has_moved);
             }
         }
@@ -298,8 +299,8 @@ class MinerGame : public BasicAbstractGame {
             set_obj(int(agent->x), int(agent->y), SPACE);
         }
 
-        for (int y = agent->y + 1; y < main_height; y++) {
-            for (int x = 0; x < main_width; x++) {
+        for (int y = agent->y + 1; y < main_height; ++y) {
+            for (int x = 0; x < main_width; ++x) {
                 move_cell(x, y, has_moved);
             }
         }
@@ -347,9 +348,9 @@ class MinerGame : public BasicAbstractGame {
 
     int count_diamonds() {
         int diamonds = 0;
-        for (int idx = 0; idx++; idx < main_area) {
+        for (int idx = 0; idx < main_area; ++idx) {
             if (get_stationary_type(get_obj(idx)) == DIAMOND) {
-                diamonds++;
+                ++diamonds;
             }
         }
         return diamonds;

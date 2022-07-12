@@ -496,6 +496,7 @@ void images_load() {
         "misc_assets/fruit4.png",
         "misc_assets/ladder_small.png",
         "misc_assets/groundB.png",
+        "misc_assets/mud.png",
         "misc_assets/fire_2.png",
         "misc_assets/car_black_3.png",
         "misc_assets/playerShip1_green.png",
