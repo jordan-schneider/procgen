@@ -1228,8 +1228,9 @@ void BasicAbstractGame::deserialize(ReadBuffer *b) {
     read_entities(b, entities);
 
     int agent_idx = find_entity_index(PLAYER);
-    fassert(agent_idx >= 0);
-    agent = entities[agent_idx];
+    if (agent_idx >= 0) {
+        agent = entities[agent_idx];
+    }
 
     // we don't want to serialize a bunch of QImages
     // for now we only support games that don't require storing these assets
