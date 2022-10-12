@@ -52,7 +52,7 @@ class custom_build_ext(build_ext):
         if self.inplace:
             print("skipping inplace build, extension will be built on demand")
             return
-        sys.path.append(PACKAGE_ROOT)
+        sys.path.insert(0, PACKAGE_ROOT)
         import build
 
         lib_dir = build.build(package=True)
