@@ -504,7 +504,7 @@ LIBENV_API void set_state(libenv_env *handle, int env_idx, char *data, int lengt
     venv->games.at(env_idx)->observe();
 }
 
-LIBENV_API void set_miner_state(libenv_env *handle, int env_idx, char*data, int length) {
+LIBENV_API void set_miner_state(libenv_env *handle, int env_idx, char *data, int length) {
     auto venv = (VecGame *)(handle);
     venv->wait_for_stepping_threads();
     auto b = ReadBuffer(data, length);

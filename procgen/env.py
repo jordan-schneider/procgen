@@ -157,6 +157,7 @@ class BaseProcgenEnv(CEnv):
             c_func_defs=[
                 "int get_state(libenv_env *, int, char *, int);",
                 "void set_state(libenv_env *, int, char *, int);",
+                "void set_miner_state(libenv_env *, int, char *, int);",
             ],
         )
         # don't use the dict space for actions
