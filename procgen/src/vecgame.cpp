@@ -2,6 +2,7 @@
 #include "cpp-utils.h"
 #include "vecoptions.h"
 #include "game.h"
+#include "games/miner.cpp"
 
 const int32_t END_OF_BUFFER = 0xCAFECAFE;
 
@@ -501,5 +502,16 @@ LIBENV_API void set_state(libenv_env *handle, int env_idx, char *data, int lengt
     // after deserializing, we need to update the observation and info buffers so that the
     // next time VecGame::observe() is called, the correct data will be in the buffers
     venv->games.at(env_idx)->observe();
+}
+
+LIBENV_API void set_miner_state(libenv_env *handle, int env_idx, char*data, int length) {
+    auto venv = (VecGame *)(handle);
+    venv->wait_for_stepping_threads();
+    auto b = ReadBuffer(data, length);
+    auto game = static_cast<MinerGame*>(venv->games.at(env_idx).get());
+    game->set_miner_state(&b);
+    // after deserializing, we need to update the observation and info buffers so that the
+    // next time VecGame::observe() is called, the correct data will be in the buffers
+    game->observe(); 
 }
 }

@@ -366,6 +366,27 @@ class MinerGame : public BasicAbstractGame {
         diamonds_remaining = b->read_int();
     }
 
+    void set_miner_state(ReadBuffer *b) {
+        game_reset();
+        Grid<int> grid = get_grid();
+        grid.deserialize(b);
+        set_grid(grid);
+
+        if (std::find(grid.data.begin(), grid.data.end(), DEAD_PLAYER) != grid.data.end()) {
+            died = true;
+            entities.erase(entities.begin()); 
+        } else {
+            died = false;
+            agent->x = b->read_int() + 0.5;
+            agent->y = b->read_int() + 0.5;
+        }
+
+        std::shared_ptr<Entity> exit_entity = *std::find_if(entities.begin(), entities.end(), [](std::shared_ptr<Entity> e) { return e->type == EXIT; });
+
+        exit_entity->x = b->read_int() + 0.5;
+        exit_entity->y = b->read_int() + 0.5; 
+    }
+
     struct MinerState {
         int grid_width;
         int grid_height;
